@@ -46,3 +46,22 @@ def makeBar(bar, left = False):
 leftbar = makeBar(bar, left = True)
 rightbar = makeBar(bar)
 
+# Response dial
+
+def makeCircle(rad, pos = (0,0), handle = False):
+
+    circle = visual.Circle(
+        win = window,
+        radius = rad,
+        edges = dial['edge'],
+        lineWidth = dial['line'],
+        lineColor = dial['col'],
+        pos = pos)
+
+    if handle:
+        circle.fillColor = monitor['col']
+    return circle
+
+dialcircle = makeCircle(dial['rad'])
+turntop = makeCircle(dial['hrad'], pos = (0, dial['hpos']), handle = True)
+turnbot = makeCircle(dial['hrad'], pos = (0, -dial['hpos']), handle = True)
