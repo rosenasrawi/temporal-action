@@ -3,8 +3,6 @@ from psychopy.hardware import keyboard
 
 from settings import *
 
-# Window
-
 window = visual.Window(
     color = monitor['col'],
     monitor = "testMonitor", 
@@ -18,16 +16,12 @@ mouse = visual.CustomMouse(
     win = window,
     visible = False)
 
-# Stimuli
-
 fixcross = visual.ShapeStim(
     win = window, 
     vertices = ((0,-fix['size']), (0,fix['size']), (0,0), (-fix['size'],0), (fix['size'],0)),
     lineWidth = fix['line'],
     closeShape = False,
     units = 'pix')
-
-# Bars
 
 def makeBar(bar, left = False):
 
@@ -46,8 +40,6 @@ def makeBar(bar, left = False):
 leftbar = makeBar(bar, left = True)
 rightbar = makeBar(bar)
 
-# Response dial
-
 def makeCircle(rad, pos = (0,0), handle = False):
 
     circle = visual.Circle(
@@ -65,3 +57,25 @@ def makeCircle(rad, pos = (0,0), handle = False):
 dialcircle = makeCircle(dial['rad'])
 turntop = makeCircle(dial['hrad'], pos = (0, dial['hpos']), handle = True)
 turnbot = makeCircle(dial['hrad'], pos = (0, -dial['hpos']), handle = True)
+
+def makeText(input, pos = (0,0), col = text['col']):
+
+    textstim = visual.TextStim(
+        win = window, 
+        font = text['font'],
+        text = input,
+        color = col,
+        pos = pos,
+        height = text['size'])
+
+    return textstim
+
+feedback = makeText('', text['fbpos'])
+
+col1 = makeText(bar['colnames'][0], text['ltpos'], col = bar['cols'][0])
+col2 = makeText(bar['colnames'][1], text['rtpos'], col = bar['cols'][1])
+
+first = makeText('Report FIRST target FIRST')
+second = makeText('Report SECOND target FIRST')
+
+space2start = makeText('Press SPACE to continue',  text['bpos'])
