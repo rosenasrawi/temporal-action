@@ -23,22 +23,19 @@ fixcross = visual.ShapeStim(
     closeShape = False,
     units = 'pix')
 
-def makeBar(bar, left = False):
-
-    if left: pos = -bar['shift']
-    else: pos = bar['shift']
+def makeBar(pos):
 
     barstim = visual.Rect(
         win = window,
         units = "pix",
         width = bar['size'][0],
         height = bar['size'][1],
-        pos = (pos,0))
+        pos = pos)
 
     return barstim
 
-leftbar = makeBar(bar, left = True)
-rightbar = makeBar(bar)
+leftbar = makeBar(pos = (-bar['shift'], 0))
+rightbar = makeBar(pos = (bar['shift'], 0))
 
 def makeCircle(rad, pos = (0,0), handle = False):
 
