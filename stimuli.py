@@ -69,8 +69,8 @@ def makeText(input, pos = (0,0), col = text['col']):
 
 feedback = makeText('', text['fbpos'])
 
-col1 = makeText(bar['colnames'][0], text['lpos'], col = bar['cols'][0])
+col1 = makeText('', text['lpos'])
 then = makeText('then')
-col2 = makeText(bar['colnames'][1], text['rpos'], col = bar['cols'][1])
+col2 = makeText('', text['rpos'])
 
 space2start = makeText('Press SPACE to continue',  text['bpos'])

@@ -42,15 +42,23 @@ def getOri(tilt):
 
     return ori
 
-def trialSettings(trial):
-    
+def setBlock():
+
     cols = bar['cols'].copy()
+    names = bar['colnames']
+    random.shuffle(cols)
+
+    col1.color = cols[0]; col1.text = names[bar['cols'].index(cols[0])]
+    col2.color = cols[1]; col2.text = names[bar['cols'].index(cols[1])]
+    
+    return cols
+
+def setTrial(trial, cols):
+    
     tcol = cols[:2]; ncol = cols[2:]
     random.shuffle(ncol) 
     
     order, loc, tilt = trials[trial]
-
-    print(trial)
 
     if order == 'second':
         tcol.reverse()
@@ -72,6 +80,8 @@ def trialSettings(trial):
 
 def showCue():
 
+    cols = setBlock()
+
     fixcross.setAutoDraw(False)
     col1.draw(); then.draw(); col2.draw()
 
@@ -80,7 +90,10 @@ def showCue():
 
     event.waitKeys(keyList = 'space')
 
+    return cols
+
 def showFix(tfix):
+
     fixcross.lineColor = fix['basecol']
     
     for _ in range(tfix):
@@ -95,10 +108,10 @@ def showBars(settings):
         fixcross.draw(); leftbar.draw(); rightbar.draw()
         window.flip()
 
-def showStim(trial):
+def showStim(trial, cols):
 
     tfix = random.randint(timing['fix'][0], timing['fix'][1])
-    enc1, enc2, tori = trialSettings(trial)
+    enc1, enc2, tori = setTrial(trial, cols)
     
     showFix(tfix)
 
