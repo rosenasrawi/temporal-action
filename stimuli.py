@@ -51,7 +51,7 @@ def makeCircle(rad, pos = (0,0), handle = False):
         circle.fillColor = monitor['col']
     return circle
 
-dialcircle = makeCircle(dial['rad'])
+dialcirc = makeCircle(dial['rad'])
 turntop = makeCircle(dial['hrad'], pos = (0, dial['hpos']), handle = True)
 turnbot = makeCircle(dial['hrad'], pos = (0, -dial['hpos']), handle = True)
 
@@ -69,10 +69,8 @@ def makeText(input, pos = (0,0), col = text['col']):
 
 feedback = makeText('', text['fbpos'])
 
-col1 = makeText(bar['colnames'][0], text['ltpos'], col = bar['cols'][0])
-col2 = makeText(bar['colnames'][1], text['rtpos'], col = bar['cols'][1])
-
-first = makeText('Report FIRST target FIRST')
-second = makeText('Report SECOND target FIRST')
+col1 = makeText(bar['colnames'][0], text['lpos'], col = bar['cols'][0])
+then = makeText('then')
+col2 = makeText(bar['colnames'][1], text['rpos'], col = bar['cols'][1])
 
 space2start = makeText('Press SPACE to continue',  text['bpos'])

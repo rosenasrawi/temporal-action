@@ -35,45 +35,45 @@ def getPerformance(repori, targori):
 
     return perf
 
-def getOri():
+def getOri(tilt):
 
-    ori = [random.randint(bar['L'][0], bar['L'][1]),
-           random.randint(bar['R'][0], bar['R'][1])]
+    ori = [random.randint(bar[tilt[0]][0], bar[tilt[0]][1]),
+           random.randint(bar[tilt[1]][0], bar[tilt[1]][1])]
 
     return ori
 
-def trialSettings():
+def trialSettings(trial):
     
     cols = bar['cols'].copy()
-
     tcol = cols[:2]; ncol = cols[2:]
-    random.shuffle(tcol); random.shuffle(ncol)
+    random.shuffle(ncol) 
+    
+    order, loc, tilt = trials[trial]
 
-    tori = getOri(); nori = getOri()
-    random.shuffle(tori)
+    print(trial)
 
-    if tori[0] < 0: nori.reverse()
+    if order == 'second':
+        tcol.reverse()
 
-    t1 = random.choice(['L','R'])
-
-    if t1 == 'L':
+    tori = getOri(tilt); nori = getOri(tilt)
+    nori.reverse()
+    
+    if loc == 'LR':
         enc1 = [tcol[0], ncol[0], tori[0], nori[0]]
         enc2 = [ncol[1], tcol[1], nori[1], tori[1]]
-    else:
+    elif loc == 'RL':
         enc1 = [ncol[0], tcol[0], nori[0], tori[0]]
         enc2 = [tcol[1], ncol[1], tori[1], nori[1]]
 
+    if order == 'second':
+        tori.reverse()
+
     return enc1, enc2, tori
 
-def showCue(block):
+def showCue():
 
     fixcross.setAutoDraw(False)
-    col1.draw(); col2.draw()
-    
-    if block == 'First':
-        first.draw()
-    elif block == 'Second':
-        second.draw()   
+    col1.draw(); then.draw(); col2.draw()
 
     space2start.draw()
     window.flip()
@@ -89,19 +89,16 @@ def showFix(tfix):
 
 def showBars(settings):
 
-    lcol, rcol, lori, rori = settings
-
-    leftbar.fillColor = lcol; leftbar.ori = lori
-    rightbar.fillColor = rcol; rightbar.ori = rori 
+    leftbar.fillColor, rightbar.fillColor, leftbar.ori, rightbar.ori = settings
 
     for _ in range(timing['enc']):
         fixcross.draw(); leftbar.draw(); rightbar.draw()
         window.flip()
 
-def showStim():
+def showStim(trial):
 
     tfix = random.randint(timing['fix'][0], timing['fix'][1])
-    enc1, enc2, tori = trialSettings()
+    enc1, enc2, tori = trialSettings(trial)
     
     showFix(tfix)
 
@@ -142,7 +139,7 @@ def showDial():
         turnbot.pos = turnHandle(turnbot.pos, rad)
 
         turns += 1
-        dialcircle.draw(); fixcross.draw()
+        dialcirc.draw(); fixcross.draw()
         turntop.draw(); turnbot.draw()
         window.flip()
 

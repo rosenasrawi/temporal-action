@@ -1,14 +1,12 @@
 from functions import *
 
-def runBlock(block, trials):
+def runBlock(trialtypes):
 
-    showCue(block)
+    showCue()
 
-    for _ in range(trials):
+    for _, trial in enumerate(trialtypes):
 
-        tori = showStim()
-        if block == 'Second': tori.reverse()
-
+        tori = showStim(trial)
         perf = 0
 
         for i, targori in enumerate(tori):
@@ -21,5 +19,5 @@ def runBlock(block, trials):
 
         showFeedback(str(round(perf/2)))
         
-runBlock(block = 'First', trials = 5)
-runBlock(block = 'Second', trials = 5)
+trialtypes = [1,2,3,4,5,6,7,8]
+runBlock(trialtypes)

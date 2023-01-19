@@ -3,15 +3,12 @@ from math import pi, atan2, degrees
 def deg2pix(deg):
 
     dpix = degrees(atan2(.5 * monitor['h'], monitor['d'])) / (.5 * monitor['res'][0])
-    pix = int(deg/dpix)
 
-    return pix
+    return int(deg/dpix)
 
 def sec2frm(sec):
-
-    frm = int(monitor['Hz'] * sec)
-
-    return frm
+    
+    return int(monitor['Hz'] * sec)
 
 monitor = {
     'res': (1536,960), 
@@ -62,8 +59,18 @@ text = {
     'col': (0.5, 0.5, 0.5),
     'size': deg2pix(0.4),
     'fbpos': (0, deg2pix(0.4)),
-    'ltpos': (-deg2pix(1), deg2pix(2)),
-    'tpos': (0, deg2pix(2)),
-    'rtpos': (deg2pix(1), deg2pix(2)),
+    'lpos': (-deg2pix(3), 0),
+    'rpos': (deg2pix(3), 0),
     'bpos': (0, -deg2pix(2))
+}
+
+trials = {
+    1: ('first', 'LR', 'LR'), # order, loc, tilt
+    2: ('first', 'LR', 'RL'),
+    3: ('first', 'RL', 'LR'),
+    4: ('first', 'RL', 'RL'),
+    5: ('second', 'LR', 'LR'),
+    6: ('second', 'LR', 'RL'),
+    7: ('second', 'RL', 'LR'),
+    8: ('second', 'RL', 'RL')
 }
