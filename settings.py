@@ -27,8 +27,8 @@ monitor = {
 fix = {
     'size': deg2pix(0.2),
     'line': deg2pix(0.05),
-    'basecol': (0.5, 0.5, 0.5),
-    'probecol': (0.9, 0.9, 0.9)
+    'basecol': (0.3, 0.3, 0.3),
+    'probecol': (0.8, 0.8, 0.8)
 }
 
 bar = {

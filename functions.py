@@ -160,14 +160,22 @@ def showDial():
 
     return key, turns
 
-def showFeedback(perf):
+def showFeedback(perf, cols):
 
     fixcross.lineColor = fix['basecol']
-    feedback.text = perf
     
-    for _ in range(timing['fb']):
-        fixcross.draw(); feedback.draw()
-        window.flip()
+    for i in range(len(perf)):
+
+        feedback.text = perf[i]; feedback.color = cols[i]
+
+        for _ in range(timing['fb']):
+            fixcross.draw(); feedback.draw()
+            window.flip()
+
+        if i == 0:
+            for _ in range(timing['fb']):
+                fixcross.draw()
+                window.flip()
 
 def showBlockfb(blockperf):
 

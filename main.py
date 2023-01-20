@@ -1,4 +1,5 @@
 from functions import *
+from statistics import mean
 
 def runBlock(trialtypes):
 
@@ -9,7 +10,7 @@ def runBlock(trialtypes):
     for _, trial in enumerate(trialtypes):
 
         tori = showStim(trial, cols)
-        perf = 0
+        perf = []
 
         for i, targori in enumerate(tori):
 
@@ -17,10 +18,10 @@ def runBlock(trialtypes):
             if i == 0: showFix(timing['del3'])
 
             repori = getReportori(key, turns)
-            perf += getPerformance(repori, targori)
+            perf.append(getPerformance(repori, targori))
 
-        blockperf += round(perf/2)
-        showFeedback(str(round(perf/2)))
+        blockperf += round(mean(perf))
+        showFeedback(list(map(str,perf)), cols[:2])
     
     blockperf = str(round((blockperf / len(trialtypes))))
     showBlockfb(blockperf)
