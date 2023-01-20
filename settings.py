@@ -57,14 +57,15 @@ timing = {
     'del1': sec2frm(1.25),
     'del2': sec2frm(1.75),
     'del3': sec2frm(1),
-    'fb': sec2frm(0.25)
+    'del4': sec2frm(.5),
+    'fb': sec2frm(.25)
 }
 
 text = {
     'font': 'Courier New',
     'col': (0.5, 0.5, 0.5),
     'size': deg2pix(0.4),
-    'fbpos': (0, deg2pix(0.4)),
+    'fbpos': (0, 0),
     'lpos': (-deg2pix(3), 0),
     'rpos': (deg2pix(3), 0),
     'bpos': (0, -deg2pix(2))
