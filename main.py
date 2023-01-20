@@ -1,14 +1,14 @@
 from functions import *
 
-def runBlock(block, trials):
+def runBlock(trialtypes):
 
-    showCue(block)
+    cols = showCue()
 
-    for _ in range(trials):
+    blockperf = 0
 
-        tori = showStim()
-        if block == 'Second': tori.reverse()
+    for _, trial in enumerate(trialtypes):
 
+        tori = showStim(trial, cols)
         perf = 0
 
         for i, targori in enumerate(tori):
@@ -19,7 +19,13 @@ def runBlock(block, trials):
             repori = getReportori(key, turns)
             perf += getPerformance(repori, targori)
 
+        blockperf += round(perf/2)
         showFeedback(str(round(perf/2)))
-        
-runBlock(block = 'First', trials = 5)
-runBlock(block = 'Second', trials = 5)
+    
+    blockperf = str(round((blockperf / len(trialtypes))))
+    showBlockfb(blockperf)
+
+for _ in range(2):    
+    trialtypes = [1,2,3,4,5,6,7,8]
+    random.shuffle(trialtypes)
+    runBlock(trialtypes)
