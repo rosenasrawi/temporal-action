@@ -68,6 +68,7 @@ def makeText(input, pos = (0,0), col = text['col']):
     return textstim
 
 feedback = makeText('', text['fbpos'])
+blockfb = makeText('')
 
 col1 = makeText('', text['lpos'])
 then = makeText('then')

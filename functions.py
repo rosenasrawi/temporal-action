@@ -169,3 +169,13 @@ def showFeedback(perf):
         fixcross.draw(); feedback.draw()
         window.flip()
 
+def showBlockfb(blockperf):
+
+    showFix(timing['enc'])
+
+    blockfb.text = 'Average score this block: ' + blockperf + '/100'
+
+    blockfb.draw(); space2start.draw()
+    window.flip()
+
+    event.waitKeys(keyList = 'space')
