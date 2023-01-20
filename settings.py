@@ -1,21 +1,27 @@
 from math import pi, atan2, degrees
 
 def deg2pix(deg):
-
     dpix = degrees(atan2(.5 * monitor['h'], monitor['d'])) / (.5 * monitor['res'][0])
-
     return int(deg/dpix)
 
 def sec2frm(sec):
-    
     return int(monitor['Hz'] * sec)
 
+screen = 'mac' # 'mac'
+
+if screen == 'LG':
+    res = (2560,1440); Hz = 120
+    h = 30; d = 50
+elif screen == 'mac':
+    res = (1536,960); Hz = 120
+    h = 22; d = 50
+
 monitor = {
-    'res': (1536,960), 
-    'Hz': 120, # Temporary bug fix
-    'col': (-0.3, -0.3, -0.3),
-    'h': 22,
-    'd': 50
+    'res': res, 
+    'Hz': Hz,
+    'h': h,
+    'd': d,
+    'col': (-0.3, -0.3, -0.3)
 }
 
 fix = {
@@ -74,3 +80,19 @@ trials = {
     7: ('second', 'RL', 'LR'),
     8: ('second', 'RL', 'RL')
 }
+
+log = [
+    'trial', 'order', 'loc', 'tilt', 'tfix',
+
+    'ori1', 'ori2', 'ori3', 'ori4',
+    'col1', 'col2', 'col3', 'col4',
+    
+    'tori1', 'tcol1', 'tloc1',
+    'tori2', 'tcol2', 'tloc2',
+
+    'rori1', 'turns1', 'key1',
+    'rori2', 'turns2', 'key2',
+    
+    'dif1', 'perf1', 'rtime1', 'rdur1'
+    'dif2', 'perf2', 'rtime2', 'rdur2'
+]
