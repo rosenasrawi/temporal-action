@@ -36,6 +36,3 @@ def addTrial(logdata, filename):
     with open(filename, mode = 'a', newline = '') as logfile:
         writer = csv.DictWriter(logfile, fieldnames = log.keys())
         writer.writerow(logdata)
-
-    print(logdata)
-    print('hello')
