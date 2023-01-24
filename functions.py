@@ -7,6 +7,8 @@ from statistics import mean
 from stimuli import *
 from settings import *
 
+from logdata import *
+
 def turnHandle(pos, rad):
     
     x, y = pos
@@ -33,7 +35,7 @@ def getPerformance(repori, targori):
 
     perf = round(100 - diff/90 * 100)
 
-    return perf
+    return perf, diff
 
 def getOri(tilt):
 
@@ -53,7 +55,7 @@ def setBlock():
     
     return cols
 
-def setTrial(trial, cols):
+def setTrial(trial, cols, logdata):
     
     tcol = cols[:2]; ncol = cols[2:]
     random.shuffle(ncol) 
@@ -73,10 +75,18 @@ def setTrial(trial, cols):
         enc1 = [ncol[0], tcol[0], nori[0], tori[0]]
         enc2 = [tcol[1], ncol[1], tori[1], nori[1]]
 
+    logdata = addSpec(logdata,
+                      data = (trial, order, loc, tilt, 
+                              enc1[2], enc1[3], enc2[2], enc2[3],
+                              enc1[0], enc1[1], enc2[0], enc2[1],
+                              tori[0], tcol[0], loc[0],
+                              tori[1], tcol[1], loc[1]),
+                      ki = 0)
+
     if order == 'second':
         tori.reverse()
 
-    return enc1, enc2, tori
+    return enc1, enc2, tori, logdata
 
 def showCue():
 
@@ -110,8 +120,10 @@ def showBars(settings):
 
 def showStim(trial, cols):
 
+    logdata = log.copy() # new trial
+
     tfix = random.randint(timing['fix'][0], timing['fix'][1])
-    enc1, enc2, tori = setTrial(trial, cols)
+    enc1, enc2, tori, logdata = setTrial(trial, cols, logdata)
     
     showFix(tfix)
 
@@ -121,7 +133,7 @@ def showStim(trial, cols):
     showBars(enc2)
     showFix(timing['del2'])
 
-    return tori
+    return tori, logdata
 
 def showDial():
     

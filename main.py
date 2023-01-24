@@ -1,6 +1,8 @@
 from functions import *
 from statistics import mean
 
+from logdata import *
+
 def runBlock(trialtypes):
 
     cols = showCue()
@@ -9,8 +11,8 @@ def runBlock(trialtypes):
 
     for _, trial in enumerate(trialtypes):
 
-        tori = showStim(trial, cols)
-        perf = []
+        tori, logdata = showStim(trial, cols)
+        perfs = []; repdata = []
 
         for i, targori in enumerate(tori):
 
@@ -18,15 +20,29 @@ def runBlock(trialtypes):
             if i == 0: showFix(timing['del3'])
 
             repori = getReportori(key, turns)
-            perf.append(getPerformance(repori, targori))
+            perf, diff = getPerformance(repori, targori)
+            repdata += [round(repori), turns, key, perf, diff]
 
-        blockperf += round(mean(perf))
-        showFeedback(list(map(str,perf)), cols[:2])
+            perfs.append(perf)
+
+        logdata = addSpec(logdata, repdata, ki = 18)
+
+        blockperf += round(mean(perfs))
+        showFeedback(list(map(str,perfs)), cols[:2])
+        addTrial(logdata, filename)
     
     blockperf = str(round((blockperf / len(trialtypes))))
     showBlockfb(blockperf)
+
+
+    return logdata
+
+
+filename = newLogfile()
 
 for _ in range(2):    
     trialtypes = [1,2,3,4,5,6,7,8]
     random.shuffle(trialtypes)
     runBlock(trialtypes)
+
+

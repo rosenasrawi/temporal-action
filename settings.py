@@ -9,6 +9,8 @@ def sec2frm(sec):
 
 screen = 'mac' # 'mac'
 
+datadir = '/Users/rosenasrawi/Documents/VU PhD/Projects/rn6 - Temporal action/Data/Logfiles'
+
 if screen == 'LG':
     res = (2560,1440); Hz = 120
     h = 30; d = 50
@@ -82,18 +84,15 @@ trials = {
     8: ('second', 'RL', 'RL')
 }
 
-log = [
-    'trial', 'order', 'loc', 'tilt', 'tfix',
+log = {
+    'trial': None, 'order': None, 'loc': None, 'tilt': None,
 
-    'ori1', 'ori2', 'ori3', 'ori4',
-    'col1', 'col2', 'col3', 'col4',
+    'ori1': None, 'ori2': None, 'ori3': None, 'ori4': None,
+    'col1': None, 'col2': None, 'col3': None, 'col4': None,
     
-    'tori1', 'tcol1', 'tloc1',
-    'tori2', 'tcol2', 'tloc2',
+    'tori1': None, 'tcol1': None, 'tloc1': None,
+    'tori2': None, 'tcol2': None, 'tloc2': None,
 
-    'rori1', 'turns1', 'key1',
-    'rori2', 'turns2', 'key2',
-    
-    'dif1', 'perf1', 'rtime1', 'rdur1'
-    'dif2', 'perf2', 'rtime2', 'rdur2'
-]
+    'rori1': None, 'turns1': None, 'key1': None, 'perf1': None, 'diff1': None,
+    'rori2': None, 'turns2': None, 'key2': None, 'perf2': None, 'diff2': None
+}
