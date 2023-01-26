@@ -34,9 +34,7 @@ def runBlock(trialtypes):
     blockperf = str(round((blockperf / len(trialtypes))))
     showBlockfb(blockperf)
 
-
     return logdata
-
 
 filename = newLogfile()
 

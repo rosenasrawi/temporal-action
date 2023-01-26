@@ -75,3 +75,4 @@ then = makeText('then')
 col2 = makeText('', text['rpos'])
 
 space2start = makeText('Press SPACE to continue',  text['bpos'])
+calibwait = makeText('Please wait for the experimenter to calibrate the eye-tracker')
