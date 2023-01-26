@@ -202,7 +202,7 @@ def showDial(trial, moment, send = False, portEEG = None, tracker = None):
 
     fixcross.lineColor = fix['basecol']
 
-    return key, turns
+    return key, turns, keyevent + moment
 
 def showFeedback(perf, cols):
     

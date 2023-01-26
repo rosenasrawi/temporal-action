@@ -13,10 +13,14 @@ def runBlock(trialtypes):
 
         tori, logdata = showStim(trial, cols)
         perfs = []; repdata = []
+        triggers = [getTrigger(trial, 'enc1'), getTrigger(trial, 'enc2'),
+                    getTrigger(trial, 'enc2'), getTrigger(trial, 'probe2')]
 
         for i, targori in enumerate(tori):
 
-            key, turns = showDial(trial, str(i+1)); 
+            key, turns, keyevent = showDial(trial, str(i+1)); 
+
+            triggers.append(getTrigger(trial, keyevent))
 
             if i == 0: showFix(timing['del3'])
 
@@ -26,7 +30,7 @@ def runBlock(trialtypes):
 
             perfs.append(perf)
 
-        logdata = addSpec(logdata, repdata, ki = 18)
+        logdata = addSpec(logdata, repdata + triggers, ki = 18)
 
         blockperf += round(mean(perfs))
         showFeedback(list(map(str,perfs)), cols[:2])

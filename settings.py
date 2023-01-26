@@ -105,5 +105,9 @@ log = {
     'tori2': None, 'tcol2': None, 'tloc2': None,
 
     'rori1': None, 'turns1': None, 'key1': None, 'perf1': None, 'diff1': None,
-    'rori2': None, 'turns2': None, 'key2': None, 'perf2': None, 'diff2': None
+    'rori2': None, 'turns2': None, 'key2': None, 'perf2': None, 'diff2': None,
+
+    'trigenc1': None, 'trigenc2': None, 
+    'trigprobe1': None, 'trigprobe2': None,
+    'trigresp1': None, 'trigresp2': None
 }
