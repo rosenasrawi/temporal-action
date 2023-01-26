@@ -7,7 +7,7 @@ from eyelinkPackages import eyelinker
 import os
 
 from stimuli import window, calibwait
-from settings import eyedir
+from settings import eyedir, events
 
 def connectEEG():
     
@@ -44,8 +44,3 @@ def stopTracker(tracker):
     tracker.stop_recording()
     tracker.transfer_edf()
     tracker.close_edf()
-
-def sendTrigger(portEEG, tracker, trig):
-
-    window.callOnFlip(portEEG.setData, trig)
-    window.callOnFlip(tracker.send_message, 'trig' + str(trig))

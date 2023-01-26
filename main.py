@@ -16,7 +16,8 @@ def runBlock(trialtypes):
 
         for i, targori in enumerate(tori):
 
-            key, turns = showDial(); 
+            key, turns = showDial(trial, str(i+1)); 
+
             if i == 0: showFix(timing['del3'])
 
             repori = getReportori(key, turns)

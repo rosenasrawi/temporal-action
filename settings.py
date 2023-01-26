@@ -84,6 +84,17 @@ trials = {
     8: ('second', 'RL', 'RL')
 }
 
+events = {
+    'enc1': 0,
+    'enc2': 10,
+    'probe1': 20,
+    'respL1': 30,
+    'respR1': 40,
+    'probe2': 50,
+    'respL2': 60,
+    'respR2': 70
+}
+
 log = {
     'trial': None, 'order': None, 'loc': None, 'tilt': None,
 

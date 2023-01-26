@@ -88,6 +88,12 @@ def setTrial(trial, cols, logdata):
 
     return enc1, enc2, tori, logdata
 
+def getTrigger(trial, event):
+
+    trigger = trial + events[event]
+
+    return trigger
+
 def showCue():
 
     cols = setBlock()
@@ -118,7 +124,7 @@ def showBars(settings):
         fixcross.draw(); leftbar.draw(); rightbar.draw()
         window.flip()
 
-def showStim(trial, cols):
+def showStim(trial, cols, send = False, portEEG = None, tracker = None):
 
     logdata = log.copy() # new trial
 
@@ -127,21 +133,41 @@ def showStim(trial, cols):
     
     showFix(tfix)
 
+    if send: 
+        window.callOnFlip(tracker.send_message, 'trig' + str(getTrigger(trial, 'enc1')))
+        window.callOnFlip(portEEG.setData, getTrigger(trial, 'enc1'))
+    else:
+        window.callOnFlip(print, getTrigger(trial, 'enc1'))
+
     showBars(enc1)
+
     showFix(timing['del1'])
 
+    if send: 
+        window.callOnFlip(tracker.send_message, 'trig' + str(getTrigger(trial, 'enc2')))
+        window.callOnFlip(portEEG.setData, getTrigger(trial, 'enc2'))
+    else:
+        window.callOnFlip(print, getTrigger(trial, 'enc2'))
+
     showBars(enc2)
+    
     showFix(timing['del2'])
 
     return tori, logdata
 
-def showDial():
+def showDial(trial, moment, send = False, portEEG = None, tracker = None):
     
     kb.clearEvents()
     turntop.pos = (0, dial['hpos'])
     turnbot.pos = (0, -dial['hpos'])
 
     released = []; pressed = []; turns = 0
+
+    if send: 
+        window.callOnFlip(tracker.send_message, 'trig' + str(getTrigger(trial, 'probe' + moment)))
+        window.callOnFlip(portEEG.setData, getTrigger(trial, 'probe' + moment))
+    else:
+        window.callOnFlip(print, getTrigger(trial, 'probe' + moment))
 
     fixcross.lineColor = fix['probecol']
     fixcross.draw()
@@ -150,12 +176,18 @@ def showDial():
     pressed = event.waitKeys(keyList = ['z', 'm', 'q'])
 
     if 'm' in pressed: 
-        key = 'm'; rad = dial['step']
+        key = 'm'; rad = dial['step']; keyevent = 'respR'
     elif 'z' in pressed: 
-        key = 'z'; rad = -dial['step']
+        key = 'z'; rad = -dial['step']; keyevent = 'respL'
     if 'q' in pressed:
         core.quit()
     
+    if send:
+        window.callOnFlip(tracker.send_message, 'trig' + str(getTrigger(trial, keyevent + moment)))
+        window.callOnFlip(portEEG.setData, getTrigger(trial, keyevent + moment))
+    else:
+        window.callOnFlip(print, getTrigger(trial, keyevent + moment))
+
     while released == [] and turns <= dial['max']:
 
         released = kb.getKeys(keyList = [key], waitRelease = True, clear = True)
