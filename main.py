@@ -5,6 +5,8 @@ from logdata import *
 
 def runBlock(trialtypes):
 
+    showCalib()
+    
     cols = showCue()
 
     blockperf = 0

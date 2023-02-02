@@ -1,4 +1,5 @@
 from math import pi, atan2, degrees
+import itertools
 
 def deg2pix(deg):
     dpix = degrees(atan2(.5 * monitor['h'], monitor['d'])) / (.5 * monitor['res'][0])
@@ -53,6 +54,18 @@ dial = {
     'step': (0.5*pi) / monitor['Hz']
 }
 
+calib = {
+    'rad': deg2pix(0.15),
+    'mrad': deg2pix(0.075),
+    'edge': deg2pix(1),
+    'line': deg2pix(0.05),
+    'col': (0.5, 0.5, 0.5),
+    'mcol': (-0.3, -0.3, -0.3),
+    'pos': list(itertools.product([-bar['shift'], 0, bar['shift']],
+                                  [bar['shift'], 0, -bar['shift']])),
+    'count': ('', '3', '', '2', '', '1', '')
+}
+
 timing = {
     'fix': (sec2frm(.5), sec2frm(.8)),
     'enc': sec2frm(.25),
@@ -60,7 +73,9 @@ timing = {
     'del2': sec2frm(1.75),
     'del3': sec2frm(1),
     'del4': sec2frm(.5),
-    'fb': sec2frm(.25)
+    'fb': sec2frm(.25),
+    'calib': sec2frm(1),
+    'count': sec2frm(.5)
 }
 
 text = {
@@ -70,7 +85,8 @@ text = {
     'fbpos': (0, 0),
     'lpos': (-deg2pix(3), 0),
     'rpos': (deg2pix(3), 0),
-    'bpos': (0, -deg2pix(2))
+    'bpos': (0, -deg2pix(2)),
+    'tpos': (0, deg2pix(2))
 }
 
 trials = {

@@ -228,3 +228,24 @@ def showBlockfb(blockperf):
     window.flip()
 
     event.waitKeys(keyList = 'space')
+
+def showCalib():
+
+    for c in calib['count']:
+
+        for _ in range(timing['count']):
+            countdown.text = c
+            
+            followdot.draw(); countdown.draw()
+            window.flip()
+
+    positions = calib['pos'].copy()
+    random.shuffle(positions)
+
+    for pos in positions:
+
+        calibcirc.pos = pos; calibdot.pos = pos
+
+        for _ in range(timing['calib']):
+            calibcirc.draw(); calibdot.draw()
+            window.flip()

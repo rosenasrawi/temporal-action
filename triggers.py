@@ -16,16 +16,17 @@ def connectEEG():
     
     return portEEG
 
-def connectTracker(sub, ses):
+def connectTracker(subject, session):
+
     tracker = eyelinker.EyeLinker(window = window, eye = 'BOTH',
-                                  filename = 'rn4_' + sub + ses + '.edf')
+                                  filename = 'rn4_' + subject + session + '.edf')
 
     return tracker
 
 def startTracker(tracker):
     os.chdir(eyedir)
 
-    tracker.open_edf() # open a data file
+    tracker.open_edf()
     tracker.init_tracker()
     tracker.start_recording()
 

@@ -37,7 +37,7 @@ def makeBar(pos):
 leftbar = makeBar(pos = (-bar['shift'], 0))
 rightbar = makeBar(pos = (bar['shift'], 0))
 
-def makeCircle(rad, pos = (0,0), handle = False):
+def makeDial(rad, pos = (0,0), handle = False):
 
     circle = visual.Circle(
         win = window,
@@ -48,12 +48,28 @@ def makeCircle(rad, pos = (0,0), handle = False):
         pos = pos)
 
     if handle:
-        circle.fillColor = monitor['col']
+        circle.fillColor = monitor['col'] 
     return circle
 
-dialcirc = makeCircle(dial['rad'])
-turntop = makeCircle(dial['hrad'], pos = (0, dial['hpos']), handle = True)
-turnbot = makeCircle(dial['hrad'], pos = (0, -dial['hpos']), handle = True)
+dialcirc = makeDial(dial['rad'])
+turntop = makeDial(dial['hrad'], pos = (0, dial['hpos']), handle = True)
+turnbot = makeDial(dial['hrad'], pos = (0, -dial['hpos']), handle = True)
+
+def makeCalib(rad, col):
+
+    circle = visual.Circle(
+        win = window,
+        radius = rad,
+        edges = calib['edge'],
+        lineWidth = calib['line'],
+        lineColor = col,
+        fillColor = col
+    )
+
+    return circle
+    
+calibcirc = makeCalib(calib['rad'], calib['col'])
+calibdot = makeCalib(calib['mrad'], calib['mcol'])
 
 def makeText(input, pos = (0,0), col = text['col']):
 
@@ -76,3 +92,6 @@ col2 = makeText('', text['rpos'])
 
 space2start = makeText('Press SPACE to continue',  text['bpos'])
 calibwait = makeText('Please wait for the experimenter to calibrate the eye-tracker')
+
+followdot = makeText('Please follow the moving dot in:', text['tpos'])
+countdown = makeText('')
