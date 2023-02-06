@@ -229,7 +229,7 @@ def showBlockfb(blockperf):
 
     event.waitKeys(keyList = 'space')
 
-def showCalib():
+def showCalib(send = False, portEEG = None, tracker = None):
 
     for c in calib['count']:
 
@@ -239,13 +239,95 @@ def showCalib():
             followdot.draw(); countdown.draw()
             window.flip()
 
+    order = events['calib'].copy()
     positions = calib['pos'].copy()
-    random.shuffle(positions)
+    
+    random.shuffle(order)
 
-    for pos in positions:
+    for num in order:
 
-        calibcirc.pos = pos; calibdot.pos = pos
+        calibcirc.pos = positions[num]; calibdot.pos = positions[num]
+
+        if send:
+            window.callOnFlip(tracker.send_message, 'trig' + str(num+200))
+            window.callOnFlip(portEEG.setData, str(num+200))
+        else:
+            window.callOnFlip(print, str(num+200))
 
         for _ in range(timing['calib']):
             calibcirc.draw(); calibdot.draw()
             window.flip()
+
+def runBlock(filename, portEEG, tracker):
+
+    trialtypes = runs['block'].copy()
+    random.shuffle(trialtypes)
+
+    showCalib(portEEG, tracker)
+    
+    cols = showCue()
+
+    blockperf = 0
+
+    for _, trial in enumerate(trialtypes):
+
+        tori, logdata = showStim(trial, cols, portEEG, tracker)
+        perfs = []; repdata = []
+        triggers = [getTrigger(trial, 'enc1'), getTrigger(trial, 'enc2'),
+                    getTrigger(trial, 'enc2'), getTrigger(trial, 'probe2')]
+
+        for i, targori in enumerate(tori):
+
+            key, turns, keyevent = showDial(trial, str(i+1), portEEG, tracker); 
+
+            triggers.append(getTrigger(trial, keyevent))
+
+            if i == 0: showFix(timing['del3'])
+
+            repori = getReportori(key, turns)
+            perf, diff = getPerformance(repori, targori)
+            repdata += [round(repori), turns, key, perf, diff]
+
+            perfs.append(perf)
+
+        logdata = addSpec(logdata, repdata + triggers, ki = 18)
+
+        blockperf += round(mean(perfs))
+        showFeedback(list(map(str,perfs)), cols[:2])
+        addTrial(logdata, filename)
+    
+    blockperf = str(round((blockperf / len(trialtypes))))
+    showBlockfb(blockperf)
+
+    return logdata
+
+def runPractice():
+    
+    trialtypes = runs['practice'].copy()
+    random.shuffle(trialtypes)
+    
+    cols = showCue()
+
+    blockperf = 0
+
+    for _, trial in enumerate(trialtypes):
+
+        tori, _ = showStim(trial, cols)
+        perfs = []
+
+        for i, targori in enumerate(tori):
+
+            key, turns, _ = showDial(trial, str(i+1)); 
+
+            if i == 0: showFix(timing['del3'])
+
+            repori = getReportori(key, turns)
+            perf, _ = getPerformance(repori, targori)
+
+            perfs.append(perf)
+
+        blockperf += round(mean(perfs))
+        showFeedback(list(map(str,perfs)), cols[:2])
+    
+    blockperf = str(round((blockperf / len(trialtypes))))
+    showBlockfb(blockperf)

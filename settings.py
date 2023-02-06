@@ -108,7 +108,8 @@ events = {
     'respR1': 40,
     'probe2': 50,
     'respL2': 60,
-    'respR2': 70
+    'respR2': 70,
+    'calib': [0,1,2,3,4,5,6,7,8]
 }
 
 log = {
@@ -126,4 +127,9 @@ log = {
     'trigenc1': None, 'trigenc2': None, 
     'trigprobe1': None, 'trigprobe2': None,
     'trigresp1': None, 'trigresp2': None
+}
+
+runs = {
+    'practice': [1,2,3,4,5,6,7,8],
+    'block': [1,2,3,4,5,6,7,8] * 8
 }

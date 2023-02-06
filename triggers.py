@@ -12,7 +12,8 @@ from settings import eyedir, events
 def connectEEG():
     
     portEEG = parallel.ParallelPort(address = 0x3050)
-    portEEG.setData(255); portEEG.setData(0)
+    # portEEG.setData(255)
+    # portEEG.setData(0)
     
     return portEEG
 
