@@ -250,7 +250,7 @@ def showCalib(send = False, portEEG = None, tracker = None):
 
         if send:
             window.callOnFlip(tracker.send_message, 'trig' + str(num+200))
-            window.callOnFlip(portEEG.setData, str(num+200))
+            window.callOnFlip(portEEG.setData, num+200)
         else:
             window.callOnFlip(print, str(num+200))
 
@@ -263,10 +263,11 @@ def runBlock(filename, portEEG, tracker):
     trialtypes = runs['block'].copy()
     random.shuffle(trialtypes)
 
-    showCalib(portEEG, tracker)
+    showCalib(True, portEEG, tracker)
     
     cols = showCue()
 
+    runPractice(True, cols)
     blockperf = 0
 
     for _, trial in enumerate(trialtypes):
@@ -301,12 +302,12 @@ def runBlock(filename, portEEG, tracker):
 
     return logdata
 
-def runPractice():
+def runPractice(block = False, cols = False):
     
     trialtypes = runs['practice'].copy()
     random.shuffle(trialtypes)
     
-    cols = showCue()
+    if block: cols = showCue()
 
     blockperf = 0
 

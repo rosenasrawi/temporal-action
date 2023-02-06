@@ -8,7 +8,7 @@ window = visual.Window(
     monitor = "testMonitor", 
     size = monitor['res'],
     units = "pix",
-    fullscr = False)
+    fullscr = True)
 
 kb = keyboard.Keyboard()
 

@@ -1,13 +1,14 @@
 from datetime import datetime
 import csv, os
 
-from settings import log, datadir
+from settings import log, logdir
 
 def newLogfile():
 
-    os.chdir(datadir)
+    os.chdir(logdir)
 
     sub = input('Subject: ')
+    ses = input('Session: ')
     now = datetime.now().strftime('%m%d%Y_%H%M%S')
 
     filename = 'rn6_' + sub + '_' + now + '.csv'
@@ -16,7 +17,7 @@ def newLogfile():
         data = csv.DictWriter(logfile, delimiter = ',', fieldnames = log.keys())
         data.writeheader()
 
-    return filename
+    return filename, sub, ses
 
 def addSpec(logdata, data, ki):
 
@@ -31,7 +32,7 @@ def addSpec(logdata, data, ki):
 
 def addTrial(logdata, filename):
 
-    os.chdir(datadir)
+    os.chdir(logdir)
 
     with open(filename, mode = 'a', newline = '') as logfile:
         writer = csv.DictWriter(logfile, fieldnames = log.keys())

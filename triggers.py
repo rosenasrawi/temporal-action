@@ -1,19 +1,17 @@
-from psychopy import parallel, event
-
 from ctypes import windll
 windll.LoadLibrary("C:\\PROGS\\inpoutx64.dll")
+from psychopy import parallel, event
 from eyelinkPackages import eyelinker
 
 import os
 
 from stimuli import window, calibwait
-from settings import eyedir, events
+from settings import eyedir
 
 def connectEEG():
     
     portEEG = parallel.ParallelPort(address = 0x3050)
-    # portEEG.setData(255)
-    # portEEG.setData(0)
+    portEEG.setData(255); portEEG.setData(0)
     
     return portEEG
 

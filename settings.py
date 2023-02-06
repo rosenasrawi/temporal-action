@@ -8,14 +8,17 @@ def deg2pix(deg):
 def sec2frm(sec):
     return int(monitor['Hz'] * sec)
 
-screen = 'mac' # 'mac'
+# screen = 'mac'
+screen = 'lab'
 
-datadir = '/Users/rosenasrawi/Documents/VU PhD/Projects/rn6 - Temporal action/Data/Logfiles'
-
-if screen == 'LG':
-    res = (2560,1440); Hz = 120
+if screen == 'lab':
+    logdir = r'C:\Users\memticipation-std\Desktop\[Server Data] (previously uploaded data can be found here)\Betul-Rose\logfiles'
+    eyedir = r'C:\Users\memticipation-std\Desktop\[Server Data] (previously uploaded data can be found here)\Betul-Rose\logfiles'
+    res = (1920,1080); Hz = 239
     h = 30; d = 50
+
 elif screen == 'mac':
+    logdir = '/Users/rosenasrawi/Documents/VU PhD/Projects/rn6 - Temporal action/Data/Logfiles'
     res = (1536,960); Hz = 120
     h = 22; d = 50
 
@@ -30,8 +33,8 @@ monitor = {
 fix = {
     'size': deg2pix(0.2),
     'line': deg2pix(0.05),
-    'basecol': (0.3, 0.3, 0.3),
-    'probecol': (0.8, 0.8, 0.8)
+    'basecol': (0.2, 0.2, 0.2),
+    'probecol': (0.9, 0.9, 0.9)
 }
 
 bar = {

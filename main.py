@@ -1,15 +1,19 @@
+from logdata import *
+filename, sub, ses = newLogfile()
+
 from functions import *
 from statistics import mean
 
-from logdata import *
 from triggers import *
 
-filename = newLogfile()
-
 portEEG = connectEEG()
-tracker = connectTracker()
+tracker = connectTracker(sub, ses)
+startTracker(tracker)
 
-for _ in range(8):    
+for i in range(8):    
     
-    runPractice()
+    if i != 0: calibrateTracker()
+
     runBlock(filename, portEEG, tracker)
+
+stopTracker()
