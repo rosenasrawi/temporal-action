@@ -94,19 +94,17 @@ def getTrigger(trial, event):
 
     return trigger
 
-def showCue():
-
-    cols = setBlock()
+def showCue(practice = False):
 
     fixcross.setAutoDraw(False)
+    if practice: time2practice.draw()
+    else: time2block.draw()
     col1.draw(); then.draw(); col2.draw()
 
     space2start.draw()
     window.flip()
 
     event.waitKeys(keyList = 'space')
-
-    return cols
 
 def showFix(tfix):
 
@@ -258,28 +256,47 @@ def showCalib(send = False, portEEG = None, tracker = None):
             calibcirc.draw(); calibdot.draw()
             window.flip()
 
-def runBlock(filename, portEEG, tracker):
+def showBreak(block, total):
+
+    blockcount.text = 'You have completed ' + str(block) + '/' + str(total) + ' blocks'
+
+    blockcount.draw(); takebreak.draw(); space2start.draw()
+    window.flip()
+
+    event.waitKeys(keyList = 'space')
+
+def showEnd():
+
+    taskend.draw(); space2close.draw()
+    window.flip()
+    
+    event.waitKeys(keyList = 'space')
+
+def runBlock(filename, send = False, portEEG = None, tracker = None):
 
     trialtypes = runs['block'].copy()
     random.shuffle(trialtypes)
 
-    showCalib(True, portEEG, tracker)
+    showCalib(send, portEEG, tracker)
     
-    cols = showCue()
-
-    runPractice(True, cols)
+    cols = setBlock()
+    showCue(True)
+    runPractice(send, cols)
+    
     blockperf = 0
+    showCue()
 
     for _, trial in enumerate(trialtypes):
 
-        tori, logdata = showStim(trial, cols, portEEG, tracker)
+        tori, logdata = showStim(trial, cols, send, portEEG, tracker)
         perfs = []; repdata = []
+        
         triggers = [getTrigger(trial, 'enc1'), getTrigger(trial, 'enc2'),
                     getTrigger(trial, 'enc2'), getTrigger(trial, 'probe2')]
 
         for i, targori in enumerate(tori):
 
-            key, turns, keyevent = showDial(trial, str(i+1), portEEG, tracker); 
+            key, turns, keyevent = showDial(trial, str(i+1), send, portEEG, tracker); 
 
             triggers.append(getTrigger(trial, keyevent))
 
@@ -302,7 +319,7 @@ def runBlock(filename, portEEG, tracker):
 
     return logdata
 
-def runPractice(block = False, cols = False):
+def runPractice(block = False, cols = []):
     
     trialtypes = runs['practice'].copy()
     random.shuffle(trialtypes)

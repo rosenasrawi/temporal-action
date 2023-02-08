@@ -90,8 +90,17 @@ col1 = makeText('', text['lpos'])
 then = makeText('then')
 col2 = makeText('', text['rpos'])
 
+time2practice = makeText('Time to practice first:', text['tpos'])
+time2block = makeText('All clear? Time to go!', text['tpos'])
+
 space2start = makeText('Press SPACE to continue',  text['bpos'])
 calibwait = makeText('Please wait for the experimenter to calibrate the eye-tracker')
 
 followdot = makeText('Please follow the moving dot in:', text['tpos'])
 countdown = makeText('')
+
+blockcount = makeText('', text['tpos'])
+takebreak = makeText('You can take a short break')
+
+taskend = makeText('You have completed this part of the task! Well done :>}')
+space2close = makeText('Press SPACE to close this screen',  text['bpos'])

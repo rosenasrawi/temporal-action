@@ -1,5 +1,11 @@
-from functions import *
-from statistics import mean
+from logdata import *
+filename, sub, ses = newLogfile()
 
-for _ in range(4):
-    runPractice()
+from functions import *
+
+for block in range(runs['stotal']):
+    # runPractice()
+    runBlock(filename)
+    showBreak(block+1, runs['stotal'])
+
+showEnd()
