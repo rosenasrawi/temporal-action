@@ -55,22 +55,6 @@ dialcirc = makeDial(dial['rad'])
 turntop = makeDial(dial['hrad'], pos = (0, dial['hpos']), handle = True)
 turnbot = makeDial(dial['hrad'], pos = (0, -dial['hpos']), handle = True)
 
-def makeCalib(rad, col):
-
-    circle = visual.Circle(
-        win = window,
-        radius = rad,
-        edges = calib['edge'],
-        lineWidth = calib['line'],
-        lineColor = col,
-        fillColor = col
-    )
-
-    return circle
-    
-calibcirc = makeCalib(calib['rad'], calib['col'])
-calibdot = makeCalib(calib['mrad'], calib['mcol'])
-
 def makeText(input, pos = (0,0), col = text['col']):
 
     textstim = visual.TextStim(
@@ -95,9 +79,6 @@ time2block = makeText('All clear? Time to go!', text['tpos'])
 
 space2start = makeText('Press SPACE to continue',  text['bpos'])
 calibwait = makeText('Please wait for the experimenter to calibrate the eye-tracker')
-
-followdot = makeText('Please follow the moving dot in:', text['tpos'])
-countdown = makeText('')
 
 blockcount = makeText('', text['tpos'])
 takebreak = makeText('You can take a short break')

@@ -57,18 +57,6 @@ dial = {
     'step': (0.5*pi) / monitor['Hz']
 }
 
-calib = {
-    'rad': deg2pix(0.15),
-    'mrad': deg2pix(0.075),
-    'edge': deg2pix(1),
-    'line': deg2pix(0.05),
-    'col': (0.5, 0.5, 0.5),
-    'mcol': (-0.3, -0.3, -0.3),
-    'pos': list(itertools.product([-bar['shift'], 0, bar['shift']],
-                                  [bar['shift'], 0, -bar['shift']])),
-    'count': ('', '3', '', '2', '', '1', '')
-}
-
 timing = {
     'fix': (sec2frm(.5), sec2frm(.8)),
     'enc': sec2frm(.25),
@@ -77,7 +65,6 @@ timing = {
     'del3': sec2frm(1),
     'del4': sec2frm(.5),
     'fb': sec2frm(.25),
-    'calib': sec2frm(1),
     'count': sec2frm(.5)
 }
 
@@ -112,7 +99,6 @@ events = {
     'probe2': 50,
     'respL2': 60,
     'respR2': 70,
-    'calib': [0,1,2,3,4,5,6,7,8]
 }
 
 log = {

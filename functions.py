@@ -227,35 +227,6 @@ def showBlockfb(blockperf):
 
     event.waitKeys(keyList = 'space')
 
-def showCalib(send = False, portEEG = None, tracker = None):
-
-    for c in calib['count']:
-
-        for _ in range(timing['count']):
-            countdown.text = c
-            
-            followdot.draw(); countdown.draw()
-            window.flip()
-
-    order = events['calib'].copy()
-    positions = calib['pos'].copy()
-    
-    random.shuffle(order)
-
-    for num in order:
-
-        calibcirc.pos = positions[num]; calibdot.pos = positions[num]
-
-        if send:
-            window.callOnFlip(tracker.send_message, 'trig' + str(num+200))
-            window.callOnFlip(portEEG.setData, num+200)
-        else:
-            window.callOnFlip(print, str(num+200))
-
-        for _ in range(timing['calib']):
-            calibcirc.draw(); calibdot.draw()
-            window.flip()
-
 def showBreak(block, total):
 
     blockcount.text = 'You have completed ' + str(block) + '/' + str(total) + ' blocks'
@@ -276,8 +247,6 @@ def runBlock(filename, send = False, portEEG = None, tracker = None):
 
     trialtypes = runs['block'].copy()
     random.shuffle(trialtypes)
-
-    showCalib(send, portEEG, tracker)
     
     cols = setBlock()
     showCue(True)
