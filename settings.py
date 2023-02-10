@@ -8,12 +8,12 @@ def deg2pix(deg):
 def sec2frm(sec):
     return int(monitor['Hz'] * sec)
 
-screen = 'mac'
-# screen = 'lab'
+# screen = 'mac'
+screen = 'lab'
 
 if screen == 'lab':
     logdir = r'C:\Users\memticipation-std\Desktop\[Server Data] (previously uploaded data can be found here)\Betul-Rose\logfiles'
-    eyedir = r'C:\Users\memticipation-std\Desktop\[Server Data] (previously uploaded data can be found here)\Betul-Rose\logfiles'
+    eyedir = r'C:\Users\memticipation-std\Desktop\[Server Data] (previously uploaded data can be found here)\Betul-Rose\eyedata'
     res = (1920,1080); Hz = 239
     h = 30; d = 50
 

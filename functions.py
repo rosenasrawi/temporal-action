@@ -114,22 +114,9 @@ def showFix(tfix):
         fixcross.draw()
         window.flip()
 
-def showBars(settings):
+def showBars(settings, trial, send = False, portEEG = None, tracker = None):
 
     leftbar.fillColor, rightbar.fillColor, leftbar.ori, rightbar.ori = settings
-
-    for _ in range(timing['enc']):
-        fixcross.draw(); leftbar.draw(); rightbar.draw()
-        window.flip()
-
-def showStim(trial, cols, send = False, portEEG = None, tracker = None):
-
-    logdata = log.copy() # new trial
-
-    tfix = random.randint(timing['fix'][0], timing['fix'][1])
-    enc1, enc2, tori, logdata = setTrial(trial, cols, logdata)
-    
-    showFix(tfix)
 
     if send: 
         window.callOnFlip(tracker.send_message, 'trig' + str(getTrigger(trial, 'enc1')))
@@ -137,18 +124,24 @@ def showStim(trial, cols, send = False, portEEG = None, tracker = None):
     else:
         window.callOnFlip(print, getTrigger(trial, 'enc1'))
 
-    showBars(enc1)
+    for f in range(timing['enc']):
+        fixcross.draw(); leftbar.draw(); rightbar.draw()
+        window.flip()
+        if send and f == 2: portEEG.setData(0)
 
+def showStim(trial, cols, send = False, portEEG = None, tracker = None):
+
+    logdata = log.copy()
+
+    tfix = random.randint(timing['fix'][0], timing['fix'][1])
+    enc1, enc2, tori, logdata = setTrial(trial, cols, logdata)
+    
+    showFix(tfix)
+
+    showBars(enc1, trial, send, portEEG, tracker)
     showFix(timing['del1'])
 
-    if send: 
-        window.callOnFlip(tracker.send_message, 'trig' + str(getTrigger(trial, 'enc2')))
-        window.callOnFlip(portEEG.setData, getTrigger(trial, 'enc2'))
-    else:
-        window.callOnFlip(print, getTrigger(trial, 'enc2'))
-
-    showBars(enc2)
-    
+    showBars(enc2, trial, send, portEEG, tracker)
     showFix(timing['del2'])
 
     return tori, logdata
@@ -171,6 +164,8 @@ def showDial(trial, moment, send = False, portEEG = None, tracker = None):
     fixcross.draw()
     window.flip()
 
+    if send: core.wait(2/monitor['Hz']); portEEG.setData(0)
+
     pressed = event.waitKeys(keyList = ['z', 'm', 'q'])
 
     if 'm' in pressed: 
@@ -182,7 +177,8 @@ def showDial(trial, moment, send = False, portEEG = None, tracker = None):
     
     if send:
         window.callOnFlip(tracker.send_message, 'trig' + str(getTrigger(trial, keyevent + moment)))
-        window.callOnFlip(portEEG.setData, getTrigger(trial, keyevent + moment))
+        portEEG.setData(getTrigger(trial, keyevent + moment))
+        core.wait(2/monitor['Hz']); portEEG.setData(0)
     else:
         window.callOnFlip(print, getTrigger(trial, keyevent + moment))
 
@@ -243,14 +239,19 @@ def showEnd():
     
     event.waitKeys(keyList = 'space')
 
+def showSaving():
+
+    savingdata.draw()
+    window.flip()
+
 def runBlock(filename, send = False, portEEG = None, tracker = None):
 
     trialtypes = runs['block'].copy()
     random.shuffle(trialtypes)
     
     cols = setBlock()
-    showCue(True)
-    runPractice(send, cols)
+    # showCue(True)
+    # runPractice(cols)
     
     blockperf = 0
     showCue()
@@ -288,12 +289,10 @@ def runBlock(filename, send = False, portEEG = None, tracker = None):
 
     return logdata
 
-def runPractice(block = False, cols = []):
+def runPractice(cols):
     
     trialtypes = runs['practice'].copy()
     random.shuffle(trialtypes)
-    
-    if block: cols = showCue()
 
     blockperf = 0
 

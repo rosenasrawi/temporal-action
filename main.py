@@ -2,18 +2,18 @@ from logdata import *
 filename, sub, ses = newLogfile()
 
 from functions import *
-from statistics import mean
-
 from triggers import *
 
+send = True
 portEEG = connectEEG()
 tracker = connectTracker(sub, ses)
+
 startTracker(tracker)
 
-for i in range(8):    
-    
-    if i != 0: calibrateTracker()
+for block in range(runs['stotal']):
+    runBlock(filename, send, portEEG, tracker)
+    showBreak(block+1, runs['stotal'])
 
-    runBlock(filename, portEEG, tracker)
-
-stopTracker()
+showSaving()
+stopTracker(tracker)
+showEnd()

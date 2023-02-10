@@ -84,4 +84,5 @@ blockcount = makeText('', text['tpos'])
 takebreak = makeText('You can take a short break')
 
 taskend = makeText('You have completed this part of the task! Well done :>}')
+savingdata = makeText('Saving data! Please wait')
 space2close = makeText('Press SPACE to close this screen',  text['bpos'])
