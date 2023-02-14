@@ -36,6 +36,7 @@ def makeBar(pos):
 
 leftbar = makeBar(pos = (-bar['shift'], 0))
 rightbar = makeBar(pos = (bar['shift'], 0))
+centerbar = makeBar(pos = (0,0)); centerbar.fillColor = fix['basecol']
 
 def makeDial(rad, pos = (0,0), handle = False):
 
@@ -76,6 +77,7 @@ col2 = makeText('', text['rpos'])
 
 time2practice = makeText('Time to practice first:', text['tpos'])
 time2block = makeText('All clear? Time to go!', text['tpos'])
+practicedial = makeText('Let the handles match the bar orientation. Press and hold: [Z] for counterclockwise; [M] for clockwise.', text['tpos'])
 
 space2start = makeText('Press SPACE to continue',  text['bpos'])
 calibwait = makeText('Please wait for the experimenter to calibrate the eye-tracker')

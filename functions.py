@@ -146,6 +146,46 @@ def showStim(trial, cols, send = False, portEEG = None, tracker = None):
 
     return tori, logdata
 
+def showPracticeDial():
+
+    ori = getOri('LR')
+    centerbar.ori = random.choice(ori)
+    
+    kb.clearEvents()
+    released = []; pressed = []; turns = 0
+    
+    turntop.pos = (0, dial['hpos'])
+    turnbot.pos = (0, -dial['hpos'])
+
+    dialcirc.draw(); centerbar.draw()
+    turntop.draw(); turnbot.draw()
+    practicedial.draw()
+
+    window.flip()
+
+    pressed = event.waitKeys(keyList = ['z', 'm', 'q'])
+
+    if 'm' in pressed: 
+        key = 'm'; rad = dial['step']
+    elif 'z' in pressed: 
+        key = 'z'; rad = -dial['step']
+    if 'q' in pressed:
+        core.quit()
+
+    while released == [] and turns <= dial['max']:
+
+        released = kb.getKeys(keyList = [key], waitRelease = True, clear = True)
+
+        turntop.pos = turnHandle(turntop.pos, rad)
+        turnbot.pos = turnHandle(turnbot.pos, rad)
+
+        turns += 1
+        dialcirc.draw(); centerbar.draw()
+        turntop.draw(); turnbot.draw()
+        practicedial.draw()
+        
+        window.flip()
+
 def showDial(trial, moment, send = False, portEEG = None, tracker = None):
 
     kb.clearEvents()
