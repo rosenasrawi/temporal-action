@@ -1,6 +1,6 @@
 from psychopy import core, event
 
-import random
+import random, time
 from math import cos, sin
 from statistics import mean
 
@@ -114,15 +114,15 @@ def showFix(tfix):
         fixcross.draw()
         window.flip()
 
-def showBars(settings, trial, send = False, portEEG = None, tracker = None):
+def showBars(settings, trial, time, send = False, portEEG = None, tracker = None):
 
     leftbar.fillColor, rightbar.fillColor, leftbar.ori, rightbar.ori = settings
 
     if send: 
-        window.callOnFlip(tracker.send_message, 'trig' + str(getTrigger(trial, 'enc1')))
-        window.callOnFlip(portEEG.setData, getTrigger(trial, 'enc1'))
+        window.callOnFlip(tracker.send_message, 'trig' + str(getTrigger(trial, 'enc'+time)))
+        window.callOnFlip(portEEG.setData, getTrigger(trial, 'enc'+time))
     else:
-        window.callOnFlip(print, getTrigger(trial, 'enc1'))
+        window.callOnFlip(print, getTrigger(trial, 'enc'+time))
 
     for f in range(timing['enc']):
         fixcross.draw(); leftbar.draw(); rightbar.draw()
@@ -138,16 +138,16 @@ def showStim(trial, cols, send = False, portEEG = None, tracker = None):
     
     showFix(tfix)
 
-    showBars(enc1, trial, send, portEEG, tracker)
+    showBars(enc1, trial, '1', send, portEEG, tracker)
     showFix(timing['del1'])
 
-    showBars(enc2, trial, send, portEEG, tracker)
+    showBars(enc2, trial, '2', send, portEEG, tracker)
     showFix(timing['del2'])
 
     return tori, logdata
 
 def showDial(trial, moment, send = False, portEEG = None, tracker = None):
-    
+
     kb.clearEvents()
     turntop.pos = (0, dial['hpos'])
     turnbot.pos = (0, -dial['hpos'])
@@ -164,9 +164,13 @@ def showDial(trial, moment, send = False, portEEG = None, tracker = None):
     fixcross.draw()
     window.flip()
 
+    ptime = time.time()
+
     if send: core.wait(2/monitor['Hz']); portEEG.setData(0)
 
     pressed = event.waitKeys(keyList = ['z', 'm', 'q'])
+
+    ktime = time.time()
 
     if 'm' in pressed: 
         key = 'm'; rad = dial['step']; keyevent = 'respR'
@@ -194,9 +198,14 @@ def showDial(trial, moment, send = False, portEEG = None, tracker = None):
         turntop.draw(); turnbot.draw()
         window.flip()
 
+    rtime = time.time()
+
+    DT = ktime - ptime
+    RT = rtime - ktime
+
     fixcross.lineColor = fix['basecol']
 
-    return key, turns, keyevent + moment
+    return key, turns, keyevent + moment, DT, RT
 
 def showFeedback(perf, cols):
     
@@ -244,19 +253,19 @@ def showSaving():
     savingdata.draw()
     window.flip()
 
-def runBlock(filename, send = False, portEEG = None, tracker = None):
+def runBlock(blocknum, filename, send = False, portEEG = None, tracker = None):
 
     trialtypes = runs['block'].copy()
     random.shuffle(trialtypes)
     
     cols = setBlock()
-    # showCue(True)
+    showCue(True)
     # runPractice(cols)
     
     blockperf = 0
     showCue()
 
-    for _, trial in enumerate(trialtypes):
+    for trialnum, trial in enumerate(trialtypes):
 
         tori, logdata = showStim(trial, cols, send, portEEG, tracker)
         perfs = []; repdata = []
@@ -266,7 +275,7 @@ def runBlock(filename, send = False, portEEG = None, tracker = None):
 
         for i, targori in enumerate(tori):
 
-            key, turns, keyevent = showDial(trial, str(i+1), send, portEEG, tracker); 
+            key, turns, keyevent, DT, RT = showDial(trial, str(i+1), send, portEEG, tracker); 
 
             triggers.append(getTrigger(trial, keyevent))
 
@@ -274,11 +283,13 @@ def runBlock(filename, send = False, portEEG = None, tracker = None):
 
             repori = getReportori(key, turns)
             perf, diff = getPerformance(repori, targori)
-            repdata += [round(repori), turns, key, perf, diff]
+            repdata += [round(repori), turns, key, perf, diff, DT, RT]
 
             perfs.append(perf)
 
         logdata = addSpec(logdata, repdata + triggers, ki = 18)
+        logdata['trialnum'] = trialnum
+        logdata['blocknum'] = blocknum
 
         blockperf += round(mean(perfs))
         showFeedback(list(map(str,perfs)), cols[:2])
@@ -303,7 +314,7 @@ def runPractice(cols):
 
         for i, targori in enumerate(tori):
 
-            key, turns, _ = showDial(trial, str(i+1)); 
+            key, turns, _, _, _ = showDial(trial, str(i+1)); 
 
             if i == 0: showFix(timing['del3'])
 

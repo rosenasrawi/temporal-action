@@ -3,8 +3,8 @@ filename, sub, ses = newLogfile()
 
 from functions import *
 
-for block in range(runs['stotal']):
-    runBlock(filename)
-    showBreak(block+1, runs['stotal'])
+for blocknum in range(runs['stotal']):
+    if blocknum != 0: showBreak(blocknum+1, runs['stotal'])
+    runBlock(blocknum, filename)
 
 showEnd()

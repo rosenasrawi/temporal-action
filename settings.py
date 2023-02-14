@@ -8,8 +8,8 @@ def deg2pix(deg):
 def sec2frm(sec):
     return int(monitor['Hz'] * sec)
 
-# screen = 'mac'
-screen = 'lab'
+screen = 'mac'
+# screen = 'lab'
 
 if screen == 'lab':
     logdir = r'C:\Users\memticipation-std\Desktop\[Server Data] (previously uploaded data can be found here)\Betul-Rose\logfiles'
@@ -111,11 +111,16 @@ log = {
     'tori2': None, 'tcol2': None, 'tloc2': None,
 
     'rori1': None, 'turns1': None, 'key1': None, 'perf1': None, 'diff1': None,
+    'DT1': None, 'RT1': None,
+
     'rori2': None, 'turns2': None, 'key2': None, 'perf2': None, 'diff2': None,
+    'DT2': None, 'RT2': None,
 
     'trigenc1': None, 'trigenc2': None, 
     'trigprobe1': None, 'trigprobe2': None,
-    'trigresp1': None, 'trigresp2': None
+    'trigresp1': None, 'trigresp2': None,
+
+    'trialnum': None, 'blocknum': None
 }
 
 runs = {

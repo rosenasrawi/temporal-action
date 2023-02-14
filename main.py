@@ -10,9 +10,9 @@ tracker = connectTracker(sub, ses)
 
 startTracker(tracker)
 
-for block in range(runs['stotal']):
-    runBlock(filename, send, portEEG, tracker)
-    showBreak(block+1, runs['stotal'])
+for blocknum in range(runs['stotal']):
+    if blocknum != 0: showBreak(block+1, runs['stotal'])
+    runBlock(blocknum, filename, send, portEEG, tracker)
 
 showSaving()
 stopTracker(tracker)
