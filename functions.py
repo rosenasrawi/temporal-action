@@ -44,16 +44,34 @@ def getOri(tilt):
 
     return ori
 
-def setBlock():
+def randomCols():
 
     cols = bar['cols'].copy()
-    names = bar['colnames']
     random.shuffle(cols)
+    
+    return cols
+
+def balanceCols():
+    
+    cols = bar['cols'].copy()
+    random.shuffle(cols)
+
+    blockcols = [[cols[0], cols[1], cols[2], cols[3]], 
+                 [cols[2], cols[3], cols[0], cols[1]], 
+                 [cols[1], cols[2], cols[0], cols[3]],
+                 [cols[3], cols[0], cols[1], cols[2]]]
+
+    random.shuffle(blockcols)
+
+    return blockcols
+
+def setCue(cols):
+
+    names = bar['colnames']
 
     col1.color = cols[0]; col1.text = names[bar['cols'].index(cols[0])]
     col2.color = cols[1]; col2.text = names[bar['cols'].index(cols[1])]
-    
-    return cols
+
 
 def setTrial(trial, cols, logdata):
     
@@ -146,7 +164,7 @@ def showStim(trial, cols, send = False, portEEG = None, tracker = None):
 
     return tori, logdata
 
-def showPracticeDial():
+def practiceDial():
 
     ori = getOri('LR')
     centerbar.ori = random.choice(ori)
@@ -272,6 +290,13 @@ def showBlockfb(blockperf):
 
     event.waitKeys(keyList = 'space')
 
+def showStart():
+
+    taskstart.draw(); space2start.draw()
+    window.flip()
+    
+    event.waitKeys(keyList = 'space')
+
 def showBreak(block, total):
 
     blockcount.text = 'You have completed ' + str(block) + '/' + str(total) + ' blocks'
@@ -293,15 +318,8 @@ def showSaving():
     savingdata.draw()
     window.flip()
 
-def runBlock(blocknum, filename, send = False, portEEG = None, tracker = None):
+def runBlock(blocknum, filename, trialtypes, cols, send = False, portEEG = None, tracker = None):
 
-    trialtypes = runs['block'].copy()
-    random.shuffle(trialtypes)
-    
-    cols = setBlock()
-    showCue(True)
-    # runPractice(cols)
-    
     blockperf = 0
     showCue()
 

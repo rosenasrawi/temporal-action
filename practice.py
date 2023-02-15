@@ -3,11 +3,18 @@ filename, sub, ses = newLogfile()
 
 from functions import *
 
-for _ in range(8):
-    showPracticeDial()
+for _ in range(4):
+    practiceDial()
 
-for blocknum in range(runs['stotal']):
-    if blocknum != 0: showBreak(blocknum+1, runs['stotal'])
-    runBlock(blocknum, filename)
+for blocknum in range(runs['ptotal']):
+
+    trialtypes = runs['pblock'].copy()
+    random.shuffle(trialtypes)
+    cols = randomCols()
+    setCue(cols)
+
+    showCue(True)
+    runPractice(cols)
+    runBlock(blocknum, filename, trialtypes, cols)
 
 showEnd()
