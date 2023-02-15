@@ -3,6 +3,8 @@ filename, sub, ses = newLogfile()
 
 from functions import *
 
+showStart()
+
 for _ in range(4):
     practiceDial()
 

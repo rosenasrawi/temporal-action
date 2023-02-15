@@ -72,7 +72,6 @@ def setCue(cols):
     col1.color = cols[0]; col1.text = names[bar['cols'].index(cols[0])]
     col2.color = cols[1]; col2.text = names[bar['cols'].index(cols[1])]
 
-
 def setTrial(trial, cols, logdata):
     
     tcol = cols[:2]; ncol = cols[2:]
@@ -139,8 +138,6 @@ def showBars(settings, trial, time, send = False, portEEG = None, tracker = None
     if send: 
         window.callOnFlip(tracker.send_message, 'trig' + str(getTrigger(trial, 'enc'+time)))
         window.callOnFlip(portEEG.setData, getTrigger(trial, 'enc'+time))
-    else:
-        window.callOnFlip(print, getTrigger(trial, 'enc'+time))
 
     for f in range(timing['enc']):
         fixcross.draw(); leftbar.draw(); rightbar.draw()
@@ -215,8 +212,6 @@ def showDial(trial, moment, send = False, portEEG = None, tracker = None):
     if send: 
         window.callOnFlip(tracker.send_message, 'trig' + str(getTrigger(trial, 'probe' + moment)))
         window.callOnFlip(portEEG.setData, getTrigger(trial, 'probe' + moment))
-    else:
-        window.callOnFlip(print, getTrigger(trial, 'probe' + moment))
 
     fixcross.lineColor = fix['probecol']
     fixcross.draw()
@@ -241,8 +236,6 @@ def showDial(trial, moment, send = False, portEEG = None, tracker = None):
         window.callOnFlip(tracker.send_message, 'trig' + str(getTrigger(trial, keyevent + moment)))
         portEEG.setData(getTrigger(trial, keyevent + moment))
         core.wait(2/monitor['Hz']); portEEG.setData(0)
-    else:
-        window.callOnFlip(print, getTrigger(trial, keyevent + moment))
 
     while released == [] and turns <= dial['max']:
 
