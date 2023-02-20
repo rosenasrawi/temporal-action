@@ -2,13 +2,13 @@ from logdata import *
 filename, sub, ses = newLogfile()
 
 from functions import *
-# from triggers import *
+from triggers import *
 
-# send = True
-# portEEG = connectEEG()
-# tracker = connectTracker(sub, ses)
+send = True
+portEEG = connectEEG()
+tracker = connectTracker(sub, ses)
 
-# startTracker(tracker)
+startTracker(tracker)
 showStart()
 blockcols = balanceCols()
 
@@ -22,11 +22,11 @@ for blocknum in range(runs['stotal']):
 
     trialtypes = runs['sblock'].copy()
     random.shuffle(trialtypes)
-    runBlock(blocknum, filename, trialtypes, cols)#, send, portEEG, tracker)
+    runBlock(blocknum, filename, trialtypes, cols, send, portEEG, tracker)
     
     if blocknum != runs['stotal']: 
         showBreak(blocknum+1, runs['stotal'])
 
-# showSaving()
-# stopTracker(tracker)
+showSaving()
+stopTracker(tracker)
 showEnd()
