@@ -15,7 +15,7 @@ if screen == 'lab':
     logdir = r'C:\Users\memticipation-std\Desktop\[Server Data] (previously uploaded data can be found here)\Betul-Rose\logfiles'
     eyedir = r'C:\Users\memticipation-std\Desktop\[Server Data] (previously uploaded data can be found here)\Betul-Rose\eyedata'
     res = (1920,1080); Hz = 239
-    h = 30; d = 50
+    h = 28; d = 60
 
 elif screen == 'mac':
     logdir = '/Users/rosenasrawi/Documents/VU PhD/Projects/rn6 - Temporal action/Data/Logfiles'
