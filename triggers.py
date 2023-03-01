@@ -19,7 +19,7 @@ def connectEEG():
 def connectTracker(subject, session):
 
     tracker = eyelinker.EyeLinker(window = window, eye = 'BOTH',
-                                  filename = 'rn4_' + subject + session + '.edf')
+                                  filename = 'rn6_' + subject + session + '.edf')
 
     return tracker
 

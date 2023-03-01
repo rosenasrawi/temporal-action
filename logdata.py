@@ -11,7 +11,7 @@ def newLogfile():
     ses = input('Session: ')
     now = datetime.now().strftime('%m%d%Y_%H%M%S')
 
-    filename = 'rn6_' + sub + '_' + now + '.csv'
+    filename = 'rn6_' + sub + '_' + ses + '_' + now + '.csv'
 
     with open(filename, mode = 'w') as logfile:
         data = csv.DictWriter(logfile, delimiter = ',', fieldnames = log.keys())
