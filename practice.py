@@ -5,7 +5,7 @@ from functions import *
 
 showStart()
 
-for _ in range(4):
+for _ in range(10):
     practiceDial()
 
 for blocknum in range(runs['ptotal']):
