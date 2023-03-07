@@ -25,6 +25,7 @@ for blocknum in range(runs['stotal']):
     runBlock(blocknum, filename, trialtypes, cols, send, portEEG, tracker)
     
     if blocknum != runs['stotal']: 
+        calibrateTracker(tracker)
         showBreak(blocknum+1, runs['stotal'])
 
 showSaving()
